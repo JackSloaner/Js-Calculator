@@ -67,7 +67,21 @@ function addDecimal(e){
 }
 
 function switchSymbol(){
-
+    let newString = newNum + '';
+    if (output.textContent.indexOf('-') > -1){
+        newString = newNum + '';
+        newString = newString.substr(1);
+        output.textContent = newNum
+    } else {
+        newString = '-' + newNum;
+        output.textContent = newNum
+    }
+    if (typeof(newNum) === 'number') {
+        newNum = parseFloat(newString)
+    } else {
+        newNum = newString;
+    }
+    output.textContent = newNum;
 }
 
 function numberPressed(e){
