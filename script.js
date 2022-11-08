@@ -32,6 +32,9 @@ function clearOutput(){
 }
 
 function deleteOutput(){
+    newNum = newNum.substr(0, newNum.length - 1);
+    if (newNum === '') newNum = '0';
+    output.textContent = newNum;
 }
 
 function equalOperate(){
