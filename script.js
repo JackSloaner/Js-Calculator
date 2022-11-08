@@ -72,6 +72,14 @@ function numberPressed(e){
 
 function operate(e){
     newOperator = e.target.id;
+    if (currentOperator){
+        mini.textContent = `${currentNum} ${currentOperator} ${newNum} = `;
+        const newFloat = parseFloat(newNum);
+        newNum = operation(currentNum, newFloat, currentOperator);
+        mini.textContent += newNum;
+        output.textContent = newNum;
+        resetDefaults('currentNum', 'currentOperator')
+    }
 }
 
 function resetDefaults(...variables){
