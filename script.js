@@ -48,9 +48,7 @@ function equalOperate(){
         displayOperation(true)
     } else if (currentOperator){
             displayOperation();
-            equalPair[1] = currentOperator;
-            resetDefaults('newOperator', 'currentOperator', 'currentNum'); 
-            decimal.disabled = false;
+            resetDefaults('newOperator', 'currentOperator', 'currentNum', 'decimal'); 
         }
         
 }
@@ -75,9 +73,9 @@ function switchSymbol(){
 function numberPressed(e){
     resetDefaults('equalPair');
     resetClickAnimation();
+    const num = e.target.id;
     if (!newOperator) { 
         if(maxLengthReached()) return;
-        const num = e.target.id;
         if (typeof(newNum) === 'string'){
             (newNum != '0') ? newNum += num: newNum = num;
             output.textContent = newNum;
@@ -88,12 +86,11 @@ function numberPressed(e){
         }
     } else {
         currentOperator = newOperator;
-        resetDefaults('newOperator');
+        resetDefaults('newOperator', 'decimal');
         mini.textContent = `${newNum} ${currentOperator}`;
         currentNum = parseFloat(newNum);
-        newNum = e.target.id;
+        newNum = num;
         output.textContent = newNum;
-        decimal.disabled = false;
     }
 }
 
@@ -116,6 +113,7 @@ function displayOperation(equalsOperation) {
         mini.textContent = `${currentNum} ${currentOperator} ${newNum} = `
         const newFloat = parseFloat(newNum);
         equalPair[0] = newFloat;
+        equalPair[1] = currentOperator;
         newNum = operation(currentNum, newFloat, currentOperator);
     }
     mini.textContent += newNum;
