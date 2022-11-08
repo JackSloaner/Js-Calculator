@@ -38,6 +38,14 @@ function deleteOutput(){
 }
 
 function equalOperate(){
+    mini.textContent = `${currentNum} ${currentOperator} ${newNum} = `
+    const newFloat = parseFloat(newNum);
+    newNum = operation(currentNum, newFloat, currentOperator);
+    mini.textContent += newNum;
+    output.textContent = newNum;
+    newOperator = '';
+    currentNum = 0;
+    currentOperator = '';
 }
 
 function addDecimal(){
@@ -63,4 +71,22 @@ function numberPressed(e){
 
 function operate(e){
     newOperator = e.target.id;
+}
+
+function operation(a, b, op) {
+    switch(op){
+        case '+': 
+            return a + b;
+        break;
+        case '-':
+            return a - b;
+        break;
+        case '*':
+            return a * b;
+        break;
+        case '/':
+            return a / b;
+        break;
+        default: 
+    }
 }
