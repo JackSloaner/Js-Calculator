@@ -1,16 +1,26 @@
+@import url("https://fonts.googleapis.com/css?family=Inconsolata:400,700");
 
 *{
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 button {
-    margin: 0;
-    padding: 0;
+    
     border: 3px solid black;
 }
 
 div {
     display: flex;
+}
+
+body {
+    background-color: #B9B997;
+}
+
+.main-container {
+    justify-content: center;
 }
 
 .calc-body {
@@ -22,34 +32,21 @@ div {
     padding: 20px;
     flex-direction: column;
     gap: 20px;
-    
+    z-index: 2;
+    margin-top: 25px;
 }
 
 .display {
     background-color: #89F4F2;
-    flex: 2 1 auto;
-    border: 5px solid black;
-    border-radius: 5px;
-}
-
-.output {
-    flex: 1;
-    padding: 10px;
-    justify-content:right;
+    flex: 2 1 0;
+    border: 6px solid black;
+    border-radius: 10px;
+    flex-direction: column;
     align-items: flex-end;
-    font-size: 50px;
-    font-weight: 800;
-}
-
-.mini-output {
-    flex: 1;
-    justify-content: right;
-    font-size: 20px;
-    padding: 10px;
 }
 
 .button-container {
-    flex: 5 1 auto;
+    flex: 7 1 0;
     background-color: #1E97B7;
     flex-direction: column;
 }
@@ -62,15 +59,19 @@ div {
     height: 20%;
 }
 
-.button-container .clear {
-
-}
-
 .btn {
     flex: 1;
     background-color: #E0DFB8;
     border-radius: 10px;
     box-shadow: 4px 4px black;
+    font-family: 'Inconsolata', monospace;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.btn:active {
+    transform: translateX(4px) translateY(4px);
+    box-shadow: 0px 0px black;
 }
 
 .col2 {
@@ -78,9 +79,40 @@ div {
 }
 
 .col1 {
-    flex: 1
+    flex: 1;
 }
 
 .operator, .delete, .clear, .equals {
     background-color: #B9B997;
+}
+
+.output {
+    flex: 0 0 0;
+    padding: 10px;
+    justify-content:right;
+    align-items: flex-end;
+    font-family: 'Inconsolata';
+    font-size: 50px;
+    font-weight: 800;
+    width: 319px;
+    flex-wrap: nowrap;
+    overflow-wrap: break-word;
+}
+
+.mini-output {
+    flex: 1;
+    justify-content: right;
+    font-family: 'Inconsolata';
+    font-size: 20px;
+    padding: 10px;
+}
+
+.clicked {
+    transform: translateX(4px) translateY(4px);
+    box-shadow: 0px 0px black;
+    background-color: #D9D968;
+}
+
+.decimal:disabled {
+    color:black;
 }

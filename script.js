@@ -30,6 +30,7 @@ operators.forEach((operator) => {
 })
 
 function clearOutput(){
+    resetClickAnimation();
     resetDefaults('newNum', 'equalPair', 'newOperator', 'currentNum', 'currentOperator', 'decimal', 'mini');
     output.textContent = newNum;
 }
@@ -73,7 +74,9 @@ function switchSymbol(){
 
 function numberPressed(e){
     resetDefaults('equalPair');
+    resetClickAnimation();
     if (!newOperator) { 
+        if(maxLengthReached()) return;
         const num = e.target.id;
         if (typeof(newNum) === 'string'){
             (newNum != '0') ? newNum += num: newNum = num;
@@ -95,12 +98,14 @@ function numberPressed(e){
 }
 
 function operate(e){
-    resetDefaults('equalPair')
+    resetDefaults('equalPair');
+    resetClickAnimation();
     newOperator = e.target.id;
     if (currentOperator){
-        displayOperation()
-        resetDefaults('currentNum', 'currentOperator')
+        displayOperation();
+        resetDefaults('currentNum', 'currentOperator');
     }
+    e.target.classList.add('clicked')
 }
 
 function displayOperation(equalsOperation) {
@@ -127,6 +132,17 @@ function resetDefaults(...variables){
         else if (argument === 'decimal'){decimal.disabled = false;}
         else if (argument === 'mini') {mini.textContent = ''}
     })
+}
+
+function resetClickAnimation() {
+    const clicked = document.querySelector('.clicked');
+    if (clicked) clicked.classList.remove('clicked')
+}
+
+function maxLengthReached(){
+    if (output.textContent.length === 12) {
+        return true;
+    }
 }
 
 function operation(a, b, op) {
