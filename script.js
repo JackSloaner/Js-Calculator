@@ -4,28 +4,28 @@ let newOperator = '';
 let currentOperator = '';
 
 const output = document.querySelector('.output');
-const mini = document.querySelector('.mini-output')
+const mini = document.querySelector('.mini-output');
 const clear = document.querySelector('.clear');
-const del = document.querySelector('.delete')
-const equals = document.querySelector('.equals')
-const decimal = document.querySelector('.decimal')
-const plusMinus = document.querySelector('.plus-minus')
+const del = document.querySelector('.delete');
+const equals = document.querySelector('.equals');
+const decimal = document.querySelector('.decimal');
+const plusMinus = document.querySelector('.plus-minus');
 
 clear.addEventListener('click', clearOutput);
 del.addEventListener('click', deleteOutput);
 equals.addEventListener('click', equalOperate);
-decimal.addEventListener('click', addDecimal)
-plusMinus.addEventListener('click', switchSymbol)
+decimal.addEventListener('click', addDecimal);
+plusMinus.addEventListener('click', switchSymbol);
 
 const numbers = document.querySelectorAll('.number');
-const operators = document.querySelectorAll('.operator')
+const operators = document.querySelectorAll('.operator');
 
 numbers.forEach((number) => {
-    number.addEventListener('click', numberPressed)
+    number.addEventListener('click', numberPressed);
 })
 
 operators.forEach((operator) => {
-    operator.addEventListener('click', operate)
+    operator.addEventListener('click', operate);
 })
 
 function clearOutput(){
@@ -38,14 +38,12 @@ function deleteOutput(){
 }
 
 function equalOperate(){
-    mini.textContent = `${currentNum} ${currentOperator} ${newNum} = `
+    mini.textContent = `${currentNum} ${currentOperator} ${newNum} = `;
     const newFloat = parseFloat(newNum);
     newNum = operation(currentNum, newFloat, currentOperator);
     mini.textContent += newNum;
     output.textContent = newNum;
-    newOperator = '';
-    currentNum = 0;
-    currentOperator = '';
+    resetDefaults('newOperator', 'currentOperator', 'currentNum');
 }
 
 function addDecimal(){
@@ -61,7 +59,7 @@ function numberPressed(e){
         output.textContent = newNum;
     } else {
         currentOperator = newOperator;
-        newOperator = '';
+        resetDefaults('newOperator');
         mini.textContent = `${newNum} ${currentOperator}`;
         currentNum = parseFloat(newNum);
         newNum = e.target.id;
@@ -71,6 +69,15 @@ function numberPressed(e){
 
 function operate(e){
     newOperator = e.target.id;
+}
+
+function resetDefaults(...variables){
+    variables.forEach((argument) => {
+        if (argument === 'currentNum') {currentNum = 0;}
+        else if (argument === 'currentOperator') {currentOperator = '';}
+        else if (argument === 'newNum') {newNum = '0';}
+        else if (argument === 'newOperator') {newOperator = '';}
+    })
 }
 
 function operation(a, b, op) {
