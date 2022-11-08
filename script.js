@@ -44,6 +44,9 @@ function switchSymbol(){
 }
 
 function numberPressed(e){
+    const num = e.target.id;
+    (newNum != '0') ? newNum += num: newNum = num;
+    output.textContent = newNum;
 }
 
 function operate(e){
