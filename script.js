@@ -29,6 +29,9 @@ operators.forEach((operator) => {
 })
 
 function clearOutput(){
+    resetDefaults('newNum', 'newOperator', 'currentNum', 'currentOperator');
+    output.textContent = newNum;
+    mini.textContent = '';
 }
 
 function deleteOutput(){
