@@ -2,6 +2,7 @@ let currentNum = 0;
 let newNum = '0';
 let newOperator = '';
 let currentOperator = '';
+let equalPair = ['', ''];
 
 const output = document.querySelector('.output');
 const mini = document.querySelector('.mini-output');
@@ -29,7 +30,7 @@ operators.forEach((operator) => {
 })
 
 function clearOutput(){
-    resetDefaults('newNum', 'newOperator', 'currentNum', 'currentOperator', 'decimal', 'mini');
+    resetDefaults('newNum', 'equalPair', 'newOperator', 'currentNum', 'currentOperator', 'decimal', 'mini');
     output.textContent = newNum;
 }
 
@@ -42,11 +43,15 @@ function deleteOutput(){
 }
 
 function equalOperate(){
-    if (currentOperator){
-        displayOperation();
-        resetDefaults('newOperator', 'currentOperator', 'currentNum'); // change function so that you can keep clicking = button*
-        decimal.disabled = false;
-    }
+    if (equalPair[0]){
+        displayOperation(true)
+    } else if (currentOperator){
+            displayOperation();
+            equalPair[1] = currentOperator;
+            resetDefaults('newOperator', 'currentOperator', 'currentNum'); 
+            decimal.disabled = false;
+        }
+        
 }
 
 function addDecimal(e){
@@ -55,7 +60,7 @@ function addDecimal(e){
         output.textContent = newNum;
         e.target.disabled = true;
     } else {
-        resetDefaults('mini', 'newNum')
+        resetDefaults('mini', 'newNum0')
         newNum += '.';
         output.textContent = newNum
         e.target.disabled = true;
@@ -67,6 +72,7 @@ function switchSymbol(){
 }
 
 function numberPressed(e){
+    resetDefaults('equalPair');
     if (!newOperator) { 
         const num = e.target.id;
         if (typeof(newNum) === 'string'){
@@ -89,6 +95,7 @@ function numberPressed(e){
 }
 
 function operate(e){
+    resetDefaults('equalPair')
     newOperator = e.target.id;
     if (currentOperator){
         displayOperation()
@@ -96,10 +103,16 @@ function operate(e){
     }
 }
 
-function displayOperation() {
-    mini.textContent = `${currentNum} ${currentOperator} ${newNum} = `
-    const newFloat = parseFloat(newNum);
-    newNum = operation(currentNum, newFloat, currentOperator);
+function displayOperation(equalsOperation) {
+    if (equalsOperation){
+        mini.textContent = `${newNum} ${equalPair[1]} ${equalPair[0]} = `
+        newNum = operation(newNum, equalPair[0], equalPair[1])
+    }else{
+        mini.textContent = `${currentNum} ${currentOperator} ${newNum} = `
+        const newFloat = parseFloat(newNum);
+        equalPair[0] = newFloat;
+        newNum = operation(currentNum, newFloat, currentOperator);
+    }
     mini.textContent += newNum;
     output.textContent = newNum;
 }
@@ -109,6 +122,7 @@ function resetDefaults(...variables){
         if (argument === 'currentNum') {currentNum = 0;}
         else if (argument === 'currentOperator') {currentOperator = '';}
         else if (argument === 'newNum') {newNum = '0';}
+        else if (argument === 'equalPair') {equalPair[0] = ''; equalPair[1] = '';}
         else if (argument === 'newOperator') {newOperator = '';}
         else if (argument === 'decimal'){decimal.disabled = false;}
         else if (argument === 'mini') {mini.textContent = ''}
