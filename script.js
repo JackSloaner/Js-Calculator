@@ -35,14 +35,16 @@ function clearOutput(){
 }
 
 function deleteOutput(){
-    newNum = newNum.substr(0, newNum.length - 1);
-    if (newNum === '') newNum = '0';
-    output.textContent = newNum;
+    if(typeof(newNum) === 'string'){
+        newNum = newNum.substr(0, newNum.length - 1);
+        if (newNum === '') newNum = '0';
+        output.textContent = newNum;
+    }
 }
 
 function equalOperate(){
     if (currentOperator){
-        displayOperation()
+        displayOperation();
         resetDefaults('newOperator', 'currentOperator', 'currentNum');
     }
 }
