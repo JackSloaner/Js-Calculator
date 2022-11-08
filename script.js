@@ -47,10 +47,20 @@ function switchSymbol(){
 }
 
 function numberPressed(e){
-    const num = e.target.id;
-    (newNum != '0') ? newNum += num: newNum = num;
-    output.textContent = newNum;
+    if (!newOperator) { 
+        const num = e.target.id;
+        (newNum != '0') ? newNum += num: newNum = num;
+        output.textContent = newNum;
+    } else {
+        currentOperator = newOperator;
+        newOperator = '';
+        mini.textContent = `${newNum} ${currentOperator}`;
+        currentNum = parseFloat(newNum);
+        newNum = e.target.id;
+        output.textContent = newNum;
+    }
 }
 
 function operate(e){
+    newOperator = e.target.id;
 }
