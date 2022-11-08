@@ -41,8 +41,10 @@ function deleteOutput(){
 }
 
 function equalOperate(){
-    displayOperation()
-    resetDefaults('newOperator', 'currentOperator', 'currentNum');
+    if (currentOperator){
+        displayOperation()
+        resetDefaults('newOperator', 'currentOperator', 'currentNum');
+    }
 }
 
 function addDecimal(){
