@@ -41,11 +41,7 @@ function deleteOutput(){
 }
 
 function equalOperate(){
-    mini.textContent = `${currentNum} ${currentOperator} ${newNum} = `;
-    const newFloat = parseFloat(newNum);
-    newNum = operation(currentNum, newFloat, currentOperator);
-    mini.textContent += newNum;
-    output.textContent = newNum;
+    displayOperation()
     resetDefaults('newOperator', 'currentOperator', 'currentNum');
 }
 
@@ -73,13 +69,17 @@ function numberPressed(e){
 function operate(e){
     newOperator = e.target.id;
     if (currentOperator){
-        mini.textContent = `${currentNum} ${currentOperator} ${newNum} = `;
-        const newFloat = parseFloat(newNum);
-        newNum = operation(currentNum, newFloat, currentOperator);
-        mini.textContent += newNum;
-        output.textContent = newNum;
+        displayOperation()
         resetDefaults('currentNum', 'currentOperator')
     }
+}
+
+function displayOperation() {
+    mini.textContent = `${currentNum} ${currentOperator} ${newNum} = `
+    const newFloat = parseFloat(newNum);
+    newNum = operation(currentNum, newFloat, currentOperator);
+    mini.textContent += newNum;
+    output.textContent = newNum;
 }
 
 function resetDefaults(...variables){
