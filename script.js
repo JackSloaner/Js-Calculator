@@ -29,9 +29,8 @@ operators.forEach((operator) => {
 })
 
 function clearOutput(){
-    resetDefaults('newNum', 'newOperator', 'currentNum', 'currentOperator');
+    resetDefaults('newNum', 'newOperator', 'currentNum', 'currentOperator', 'decimal', 'mini');
     output.textContent = newNum;
-    mini.textContent = '';
 }
 
 function deleteOutput(){
@@ -45,21 +44,39 @@ function deleteOutput(){
 function equalOperate(){
     if (currentOperator){
         displayOperation();
-        resetDefaults('newOperator', 'currentOperator', 'currentNum');
+        resetDefaults('newOperator', 'currentOperator', 'currentNum'); // change function so that you can keep clicking = button*
+        decimal.disabled = false;
     }
 }
 
-function addDecimal(){
+function addDecimal(e){
+    if (typeof(newNum) === 'string') {
+        newNum += '.'
+        output.textContent = newNum;
+        e.target.disabled = true;
+    } else {
+        resetDefaults('mini', 'newNum')
+        newNum += '.';
+        output.textContent = newNum
+        e.target.disabled = true;
+    }
 }
 
 function switchSymbol(){
+
 }
 
 function numberPressed(e){
     if (!newOperator) { 
         const num = e.target.id;
-        (newNum != '0') ? newNum += num: newNum = num;
-        output.textContent = newNum;
+        if (typeof(newNum) === 'string'){
+            (newNum != '0') ? newNum += num: newNum = num;
+            output.textContent = newNum;
+        } else {
+            newNum = num;
+            output.textContent = newNum;
+            resetDefaults('mini');
+        }
     } else {
         currentOperator = newOperator;
         resetDefaults('newOperator');
@@ -67,6 +84,7 @@ function numberPressed(e){
         currentNum = parseFloat(newNum);
         newNum = e.target.id;
         output.textContent = newNum;
+        decimal.disabled = false;
     }
 }
 
@@ -92,6 +110,8 @@ function resetDefaults(...variables){
         else if (argument === 'currentOperator') {currentOperator = '';}
         else if (argument === 'newNum') {newNum = '0';}
         else if (argument === 'newOperator') {newOperator = '';}
+        else if (argument === 'decimal'){decimal.disabled = false;}
+        else if (argument === 'mini') {mini.textContent = ''}
     })
 }
 
