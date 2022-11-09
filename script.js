@@ -166,6 +166,27 @@ function resetClickAnimation() {
     if (clicked) clicked.classList.remove('clicked')
 }
 
+function roundValue(num){
+    const roundPrecision = 11 - findDigitsBeforeDecimal(num);
+}
+
+function findDigitsBeforeDecimal(num){
+    let modNumber = 10 ** 10;
+    let newAbs = Math.abs(num);
+    newAbs = newAbs - newAbs % 1;
+    let loopCounter = 0;
+    let digitCount = 11;
+    for(let i = modNumber; i > 0; i = i / 10){
+        let modded = newAbs % i;
+        if (modded != newAbs) {
+            digitCount -= loopCounter;
+            break;
+        }
+        loopCounter++;
+    }
+    return digitCount;
+}
+
 function operation(a, b, op) {
     switch(op){
         case '+': 
