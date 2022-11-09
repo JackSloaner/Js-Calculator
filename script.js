@@ -48,22 +48,37 @@ function equalOperate(){
         displayOperation(true)
     } else if (currentOperator){
             displayOperation();
-            resetDefaults('newOperator', 'currentOperator', 'currentNum'); 
+            resetDefaults('newOperator', 'currentOperator', 'currentNum', 'decimal'); 
         }
         
 }
 
 function addDecimal(e){
-    if (typeof(newNum) === 'string') {
-        newNum += '.'
+    resetDefaults('equalPair');
+    resetClickAnimation();
+    const num = '0.'
+    if (!newOperator) {
+        if(output.textContent.length >= 11) return;
+        if (typeof(newNum) === 'string') {
+            newNum += '.'
+            output.textContent = newNum;
+            e.target.disabled = true;
+        } else {
+            resetDefaults('mini', 'newNum');
+            newNum += '.';
+            output.textContent = newNum;
+            e.target.disabled = true;
+        }
+    } else{
+        currentOperator = newOperator;
+        resetDefaults('newOperator');
+        mini.textContent = `${newNum} ${currentOperator}`;
+        currentNum = parseFloat(newNum);
+        newNum = num;
         output.textContent = newNum;
         e.target.disabled = true;
-    } else {
-        resetDefaults('mini', 'newNum0')
-        newNum += '.';
-        output.textContent = newNum
-        e.target.disabled = true;
     }
+    
 }
 
 function switchSymbol(){
@@ -109,7 +124,7 @@ function numberPressed(e){
 }
 
 function operate(e){
-    resetDefaults('equalPair');
+    resetDefaults('equalPair', 'decimal');
     resetClickAnimation();
     newOperator = e.target.id;
     if (currentOperator){
@@ -149,15 +164,6 @@ function resetDefaults(...variables){
 function resetClickAnimation() {
     const clicked = document.querySelector('.clicked');
     if (clicked) clicked.classList.remove('clicked')
-}
-
-function reduceNum(num){
-    let numStr = num + '';
-    if (numStr.length >= 14) {
-        let startPoint;
-        (numStr.indexOf('-') === 0) ? startPoint = 1: startPoint = 0;
-
-    }
 }
 
 function operation(a, b, op) {
