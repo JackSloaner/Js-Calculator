@@ -100,7 +100,7 @@ function numberPressed(e){
         }
     } else {
         currentOperator = newOperator;
-        resetDefaults('newOperator', 'decimal');
+        resetDefaults('newOperator');
         mini.textContent = `${newNum} ${currentOperator}`;
         currentNum = parseFloat(newNum);
         newNum = num;
