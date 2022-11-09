@@ -152,7 +152,7 @@ function resetClickAnimation() {
 }
 
 function maxLengthReached(){
-    if (output.textContent.length === 12) {
+    if (output.textContent.length >= 12) {
         return true;
     }
 }
