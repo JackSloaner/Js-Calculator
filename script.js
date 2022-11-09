@@ -89,7 +89,7 @@ function numberPressed(e){
     resetClickAnimation();
     const num = e.target.id;
     if (!newOperator) { 
-        if(maxLengthReached()) return;
+        if(output.textContent.length >= 12) return;
         if (typeof(newNum) === 'string'){
             (newNum != '0') ? newNum += num: newNum = num;
             output.textContent = newNum;
@@ -149,12 +149,6 @@ function resetDefaults(...variables){
 function resetClickAnimation() {
     const clicked = document.querySelector('.clicked');
     if (clicked) clicked.classList.remove('clicked')
-}
-
-function maxLengthReached(){
-    if (output.textContent.length >= 12) {
-        return true;
-    }
 }
 
 function operation(a, b, op) {
