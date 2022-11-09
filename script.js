@@ -48,7 +48,7 @@ function equalOperate(){
         displayOperation(true)
     } else if (currentOperator){
             displayOperation();
-            resetDefaults('newOperator', 'currentOperator', 'currentNum', 'decimal'); 
+            resetDefaults('newOperator', 'currentOperator', 'currentNum'); 
         }
         
 }
@@ -88,7 +88,7 @@ function numberPressed(e){
     resetDefaults('equalPair');
     resetClickAnimation();
     const num = e.target.id;
-    if (!newOperator) { 
+    if (!newOperator) {
         if(output.textContent.length >= 12) return;
         if (typeof(newNum) === 'string'){
             (newNum != '0') ? newNum += num: newNum = num;
@@ -96,7 +96,7 @@ function numberPressed(e){
         } else {
             newNum = num;
             output.textContent = newNum;
-            resetDefaults('mini');
+            resetDefaults('mini', 'decimal');
         }
     } else {
         currentOperator = newOperator;
@@ -149,6 +149,15 @@ function resetDefaults(...variables){
 function resetClickAnimation() {
     const clicked = document.querySelector('.clicked');
     if (clicked) clicked.classList.remove('clicked')
+}
+
+function reduceNum(num){
+    let numStr = num + '';
+    if (numStr.length >= 14) {
+        let startPoint;
+        (numStr.indexOf('-') === 0) ? startPoint = 1: startPoint = 0;
+
+    }
 }
 
 function operation(a, b, op) {
