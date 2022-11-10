@@ -177,15 +177,20 @@ function resetClickAnimation() {
 function roundValue(num){
     const numToString = num + '';
     if (numToString.indexOf('.') === -1) return num;
-    const roundPrecision = 12 - findDigitsBeforeDecimal(num);
+    const roundPrecision = 11 - findDigitsBeforeDecimal(num);
     const modNumber = (10 ** (-roundPrecision));
     let digits = 12;
     if (numToString.indexOf('-') > -1) digits++;
-    let truncated = parseFloat((num + '').substr(0, 12));
-    let rest = num % modNumber;
+    let truncated = parseFloat((num + '').substr(0, digits));
+    let rest = Math.abs(num) - Math.abs(truncated);
     const roundReference = modNumber * 0.5;
     if (rest >= roundReference) {
-        truncated += modNumber;
+        if(numToString.indexOf('-') === -1) {
+            truncated += modNumber;
+        } else{
+            truncated -= modNumber;
+        }
+
     } 
     return truncated;
 }
