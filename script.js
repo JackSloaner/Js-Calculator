@@ -108,7 +108,13 @@ function numberPressed(e){
     if (!newOperator) {
         if(maxLengthReached()) return;
         if (typeof(newNum) === 'string'){
-            (newNum != 0) ? newNum += num: newNum = num;
+            if (newNum === '0'){
+                newNum = num;
+            } else if (newNum === '-0') {
+                newNum = '-' + num
+            } else {
+                newNum += num
+            }
             output.textContent = newNum;
         } else {
             newNum = num;
