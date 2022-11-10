@@ -1,3 +1,5 @@
+// WORK WITH -0
+
 let currentNum = 0;
 let newNum = '0';
 let newOperator = '';
@@ -58,12 +60,7 @@ function addDecimal(e){
     resetClickAnimation();
     const num = '0.'
     if (!newOperator) {
-        /* RETURN HERE
-        let maxLength = 11;
-        if (output.textContent.indexOf('-') > -1) maxLength++;
-        if(output.textContent.length >= maxLength) return;
-        */
-        if(output.textContent.length >= 11) return; // delete this
+        if (maxLengthReached(true)) return;
         if (typeof(newNum) === 'string') {
             newNum += '.'
             output.textContent = newNum;
@@ -109,9 +106,9 @@ function numberPressed(e){
     resetClickAnimation();
     const num = e.target.id;
     if (!newOperator) {
-        if(output.textContent.length >= 12) return;
+        if(maxLengthReached()) return;
         if (typeof(newNum) === 'string'){
-            (newNum != '0') ? newNum += num: newNum = num;
+            (newNum != 0) ? newNum += num: newNum = num;
             output.textContent = newNum;
         } else {
             newNum = num;
@@ -202,6 +199,15 @@ function findDigitsBeforeDecimal(num){
         if (++loopCounter === 11) digitCount = 1;
     }
     return digitCount;
+}
+
+function maxLengthReached(isDecimal){
+    let result;
+    let maxLength;
+    (isDecimal) ? maxLength = 11: maxLength = 12;
+    if (output.textContent.indexOf('-') > -1) maxLength++;
+    result = output.textContent.length >= maxLength;
+    return result;
 }
 
 function operation(a, b, op) {
