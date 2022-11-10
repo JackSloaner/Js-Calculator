@@ -58,7 +58,12 @@ function addDecimal(e){
     resetClickAnimation();
     const num = '0.'
     if (!newOperator) {
-        if(output.textContent.length >= 11) return;
+        /* RETURN HERE
+        let maxLength = 11;
+        if (output.textContent.indexOf('-') > -1) maxLength++;
+        if(output.textContent.length >= maxLength) return;
+        */
+        if(output.textContent.length >= 11) return; // delete this
         if (typeof(newNum) === 'string') {
             newNum += '.'
             output.textContent = newNum;
@@ -167,7 +172,19 @@ function resetClickAnimation() {
 }
 
 function roundValue(num){
+    const numToString = num + '';
+    if (numToString.indexOf('.') === -1) return num;
     const roundPrecision = 12 - findDigitsBeforeDecimal(num);
+    const modNumber = (10 ** (-roundPrecision));
+    let digits = 12;
+    if (numToString.indexOf('-') > -1) digits++;
+    let truncated = parseFloat((num + '').substr(0, 12));
+    let rest = num % modNumber;
+    const roundReference = modNumber * 0.5;
+    if (rest >= roundReference) {
+        truncated += modNumber;
+    } 
+    return truncated;
 }
 
 function findDigitsBeforeDecimal(num){
@@ -190,16 +207,16 @@ function findDigitsBeforeDecimal(num){
 function operation(a, b, op) {
     switch(op){
         case '+': 
-            return a + b;
+            return roundValue(a + b);
         break;
         case '-':
-            return a - b;
+            return roundValue(a - b);
         break;
         case '*':
-            return a * b;
+            return roundValue(a * b);
         break;
         case '/':
-            return a / b;
+            return roundValue(a / b);
         break;
         default: 
     }
