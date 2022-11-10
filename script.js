@@ -191,18 +191,20 @@ function roundValue(num){
 }
 
 function findDigitsBeforeDecimal(num){
-    let modNumber = 10 ** 10;
-    let newAbs = Math.abs(num);
-    newAbs = newAbs - newAbs % 1;
-    let loopCounter = 0;
-    let digitCount = 11;
-    for(let i = modNumber; i >= 1; i = i / 10){
-        let modded = newAbs % i;
-        if (modded != newAbs) {
-            digitCount -= loopCounter;
-            break;
+    let absNum = Math.abs(num);
+    absNum = absNum - absNum % 1;
+ 
+    if (absNum === 0) return 1;
+
+    let keepGoing = true
+    let i = 1;
+    let digitCount = 0;
+    while(keepGoing){
+        if (i > absNum){
+            return digitCount
         }
-        if (++loopCounter === 11) digitCount = 1;
+        i *= 10;
+        digitCount++;
     }
     return digitCount;
 }
