@@ -39,6 +39,7 @@ function clearOutput(){
 
 function deleteOutput(){
     if(typeof(newNum) === 'string'){
+        if (newNum[newNum.length - 1] === '.') resetDefaults('decimal');
         newNum = newNum.substr(0, newNum.length - 1);
         if (newNum === '') newNum = '0';
         output.textContent = newNum;
@@ -172,6 +173,14 @@ function resetDefaults(...variables){
 function resetClickAnimation() {
     const clicked = document.querySelector('.clicked');
     if (clicked) clicked.classList.remove('clicked')
+}
+
+function truncateValue(){
+    // START WORKING HERE
+}
+
+function reduceValue(){
+
 }
 
 function roundValue(num){
