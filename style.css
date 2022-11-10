@@ -25,7 +25,7 @@ body {
 
 .calc-body {
     height: 600px;
-    width: 400px;
+    width: 420px;
     background-color: #1E97B7;
     border: 8px solid black;
     border-radius: 15px;
@@ -102,6 +102,7 @@ body {
 .mini-output {
     flex: 1;
     justify-content: right;
+    text-align: right;
     font-family: 'Inconsolata';
     font-size: 20px;
     padding: 10px;
