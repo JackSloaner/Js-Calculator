@@ -178,7 +178,18 @@ function resetClickAnimation() {
 
 function truncateValue(num){
     let numToString = num + '';
-    if (numToString.indexOf('.') > -1) num = roundValue(num, numToString);
+    let ePosition = numToString.indexOf('e');
+    if (numToString.indexOf('.') > -1) {
+        if (ePosition === -1) {
+            num = roundValue(num, numToString);
+        } else { 
+            let decimalPart = numToString.substr(0, ePosition);
+            let restOfNum = numToString.substr(ePosition);
+            decimalPart = roundValue(decimalPart, numToString, restOfNum.length);
+            num = parseFloat(decimalPart + restOfNum);
+            return num;
+        }
+    }
     let maxLength = 11;
     if (numToString.indexOf('-') === -1) maxLength++;
     if (findDigitsBeforeDecimal(num) > maxLength) num = reduceValue(num, numToString);
@@ -203,25 +214,24 @@ function reduceValue(num, numToString){
     // MAKE SURE YOU STORE THE REAL COMPUTED VALUE ASWELL SO WE CAN DO OPERATIONS ON THE ANSWER
 }
 
-function roundValue(num, numToString){
+function roundValue(num, numToString, largeNumDigits){
     const dotPosition = numToString.indexOf('.');
     const containsNegative = numToString.indexOf('-') > -1;
     if (dotPosition === -1) return num;
 
     const digitCount = findDigitsBeforeDecimal(num);
 
-    let roundPrecision;
-    let numberOfCharacters;
-    let roundReference;
+    let roundPrecision = 11 - digitCount;
+    let numberOfCharacters = 12;
+    let roundReference = (10 ** (-roundPrecision)) * 0.5;
+    if (containsNegative) numberOfCharacters++;
 
-    if (digitCount <= 10){
-        roundPrecision = 11 - digitCount;
-        roundReference = roundReference = (10 ** (-roundPrecision)) * 0.5;
-        numberOfCharacters = 12;
-        if (containsNegative) numberOfCharacters++;
-    } else{
+    if (digitCount <= 20 && digitCount > 10){
         numberOfCharacters = dotPosition;
         roundReference = 0.5;
+    } else if (largeNumDigits){
+        numberOfCharacters -= largeNumDigits;
+        roundReference /= 10 ** (-largeNumDigits);
     }
     
     
