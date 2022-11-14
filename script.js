@@ -155,8 +155,9 @@ function displayOperation(equalsOperation) {
         equalPair[1] = currentOperator;
         newNum = operation(currentNum, newFloat, currentOperator);
     }
-    mini.textContent += newNum;
-    output.textContent = newNum;
+    const truncatedNum = truncateValue(newNum);
+    mini.textContent += truncatedNum;
+    output.textContent = truncatedNum;
 }
 
 function resetDefaults(...variables){
@@ -287,16 +288,16 @@ function maxLengthReached(isDecimal){
 function operation(a, b, op) {
     switch(op){
         case '+': 
-            return truncateValue(a + b);
+            return a + b;
         break;
         case '-':
-            return truncateValue(a - b);
+            return a - b;
         break;
         case '*':
-            return truncateValue(a * b);
+            return a * b;
         break;
         case '/':
-            return truncateValue(a / b);
+            return a / b;
         break;
         default: 
     }
