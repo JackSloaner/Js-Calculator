@@ -213,7 +213,7 @@ function reduceValue(num, numToString){
     let truncated = numToString.substr(0, 8 + extraCharacter);
 
     truncated = truncated.substr(0, decimalPosition) + '.' + truncated.substr(decimalPosition);
-    num = truncated + 'E' + numDigits;
+    num = truncated + 'e' + numDigits;
     return num;
 
     // MAKE SURE YOU STORE THE REAL COMPUTED VALUE ASWELL SO WE CAN DO OPERATIONS ON THE ANSWER
