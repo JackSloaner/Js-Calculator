@@ -84,21 +84,35 @@ function addDecimal(e){
 }
 
 function switchSymbol(){
-    let newString = output.textContent + '';
-    if (newString.indexOf('-') === 0){
-        newString = newString.substr(1);
-        output.textContent = newNum
+    resetDefaults('equalPair');
+    resetClickAnimation();
+    if (!newOperator) {
+        let newString = output.textContent + '';
+        if (newString.indexOf('-') === 0){
+            newString = newString.substr(1);
+        } else {
+            newString = '-' + newString
+        }
+        newNum *= -1;
+        output.textContent = newString;
+
+        if (newString.indexOf('e') === -1){
+            if (typeof(output.textContent) === 'number') {
+                newNum = parseFloat(newString)
+            } else {
+                newNum = newString;}
+                output.textContent = newNum;
+        }
     } else {
-        newNum = '-' + newNum;
-        newString = '-' + newString
-        output.textContent = newString
+        currentOperator = newOperator;
+        resetDefaults('newOperator');
+        mini.textContent = `${newNum} ${currentOperator}`;
+        currentNum = parseFloat(newNum);
+        newNum = '-0';
+        output.textContent = newNum;
     }
-    if (typeof(output.textContent) === 'number') {
-        newNum = parseFloat(newString)
-    } else {
-        newNum = newString;
-    }
-    output.textContent = newNum;
+    
+  
 
     // make it go to -0 when pressed while newOperator is active
 }
