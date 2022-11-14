@@ -69,9 +69,14 @@ body {
     font-weight: 800;
 }
 
+.btn:hover{
+    background-color: #B9B997;
+}
+
 .btn:active {
     transform: translateX(4px) translateY(4px);
     box-shadow: 0px 0px black;
+    
 }
 
 .col2 {
@@ -84,6 +89,9 @@ body {
 
 .operator, .delete, .clear, .equals {
     background-color: #B9B997;
+}
+.operator:hover, .delete:hover, .clear:hover, .equals:hover {
+    background-color: #F0ebd8;
 }
 
 .output {
@@ -110,6 +118,10 @@ body {
 .clicked {
     transform: translateX(4px) translateY(4px);
     box-shadow: 0px 0px black;
+    background-color: #D9D968;
+}
+
+.clicked:hover{
     background-color: #D9D968;
 }
 
