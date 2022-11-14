@@ -84,16 +84,16 @@ function addDecimal(e){
 }
 
 function switchSymbol(){
-    let newString = newNum + '';
-    if (output.textContent.indexOf('-') > -1){
-        newString = newNum + '';
+    let newString = output.textContent + '';
+    if (newString.indexOf('-') === 0){
         newString = newString.substr(1);
         output.textContent = newNum
     } else {
-        newString = '-' + newNum;
-        output.textContent = newNum
+        newNum = '-' + newNum;
+        newString = '-' + newString
+        output.textContent = newString
     }
-    if (typeof(newNum) === 'number') {
+    if (typeof(output.textContent) === 'number') {
         newNum = parseFloat(newString)
     } else {
         newNum = newString;
