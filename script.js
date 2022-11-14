@@ -33,11 +33,12 @@ operators.forEach((operator) => {
 
 function clearOutput(){
     resetClickAnimation();
-    resetDefaults('newNum', 'equalPair', 'newOperator', 'currentNum', 'currentOperator', 'decimal', 'mini');
+    resetDefaults('newNum', 'equalPair', 'newOperator', 'currentNum', 'currentOperator', 'decimal', 'mini', 'operators');
     output.textContent = newNum;
 }
 
 function deleteOutput(){
+    resetDefaults('operators')
     if(typeof(newNum) === 'string'){
         if (newNum[newNum.length - 1] === '.') resetDefaults('decimal');
         newNum = newNum.substr(0, newNum.length - 1);
@@ -57,7 +58,7 @@ function equalOperate(){
 }
 
 function addDecimal(e){
-    resetDefaults('equalPair');
+    resetDefaults('equalPair', 'operators');
     resetClickAnimation();
     const num = '0.'
     if (!newOperator) {
@@ -84,9 +85,9 @@ function addDecimal(e){
 }
 
 function switchSymbol(){
-    resetDefaults('equalPair');
+    resetDefaults('equalPair', 'operators');
     resetClickAnimation();
-    if (!newOperator) {
+    if (!newOperator && output.textContent != 'ERROR') {
         let newString = output.textContent + '';
         if (newString.indexOf('-') === 0){
             newString = newString.substr(1);
@@ -103,11 +104,14 @@ function switchSymbol(){
                 newNum = newString;}
                 output.textContent = newNum;
         }
-    } else {
+    } else if (output.textContent != 'ERROR'){
         currentOperator = newOperator;
         resetDefaults('newOperator');
         mini.textContent = `${newNum} ${currentOperator}`;
         currentNum = parseFloat(newNum);
+        newNum = '-0';
+        output.textContent = newNum;
+    } else{
         newNum = '-0';
         output.textContent = newNum;
     }
@@ -118,7 +122,7 @@ function switchSymbol(){
 }
 
 function numberPressed(e){
-    resetDefaults('equalPair');
+    resetDefaults('equalPair', 'operators');
     resetClickAnimation();
     const num = e.target.id;
     if (!newOperator) {
@@ -169,9 +173,15 @@ function displayOperation(equalsOperation) {
         equalPair[1] = currentOperator;
         newNum = operation(currentNum, newFloat, currentOperator);
     }
-    const truncatedNum = truncateValue(newNum);
-    mini.textContent += truncatedNum;
-    output.textContent = truncatedNum;
+    if (Math.abs(newNum) === Infinity || isNaN(newNum)) {
+        output.textContent = 'ERROR';
+        resetDefaults('equalPair', 'newOperator', 'currentNum', 'currentOperator', 'newNum', 'decimal', 'mini')
+        operators.forEach(operator => {operator.disabled = true});
+    } else{
+        const truncatedNum = truncateValue(newNum);
+        mini.textContent += truncatedNum;
+        output.textContent = truncatedNum;
+    }
 }
 
 function resetDefaults(...variables){
@@ -183,6 +193,7 @@ function resetDefaults(...variables){
         else if (argument === 'newOperator') {newOperator = '';}
         else if (argument === 'decimal'){decimal.disabled = false;}
         else if (argument === 'mini') {mini.textContent = ''}
+        else if (argument === 'operators') {operators.forEach(operator => {operator.disabled = false})};
     })
 }
 
@@ -278,7 +289,7 @@ function findDigitsBeforeDecimal(num){
  
     if (absNum === 0) return 1;
 
-    let keepGoing = true
+    let keepGoing = true;
     let i = 1;
     let digitCount = 0;
     while(keepGoing){
