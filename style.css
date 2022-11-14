@@ -87,16 +87,15 @@ body {
 }
 
 .output {
-    flex: 0 0 0;
+    flex: 1 0 0;
     padding: 10px;
     justify-content:right;
     align-items: flex-end;
     font-family: 'Inconsolata';
     font-size: 50px;
     font-weight: 800;
-    width: 319px;
+    width: 352px;
     flex-wrap: nowrap;
-    overflow-wrap: break-word;
 }
 
 .mini-output {
