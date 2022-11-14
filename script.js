@@ -1,5 +1,3 @@
-// WORK WITH -0
-// divide by 0
 let currentNum = 0;
 let newNum = '0';
 let newOperator = '';
@@ -38,6 +36,7 @@ function clearOutput(){
 }
 
 function deleteOutput(){
+    if (newOperator) return;
     resetDefaults('operators')
     if(typeof(newNum) === 'string'){
         if (newNum[newNum.length - 1] === '.') resetDefaults('decimal');
@@ -115,10 +114,6 @@ function switchSymbol(){
         newNum = '-0';
         output.textContent = newNum;
     }
-    
-  
-
-    // make it go to -0 when pressed while newOperator is active
 }
 
 function numberPressed(e){
@@ -242,14 +237,11 @@ function reduceValue(num, numToString){
     truncated = truncated.substr(0, decimalPosition) + '.' + truncated.substr(decimalPosition);
     num = truncated + 'e' + numDigits;
     return num;
-
-    // MAKE SURE YOU STORE THE REAL COMPUTED VALUE ASWELL SO WE CAN DO OPERATIONS ON THE ANSWER
 }
 
 function roundValue(num, numToString, largeNumDigits){
     const dotPosition = numToString.indexOf('.');
     const containsNegative = numToString.indexOf('-') === 0;
-    if (dotPosition === -1) return num; // ****
 
     const digitCount = findDigitsBeforeDecimal(num);
 
@@ -279,8 +271,6 @@ function roundValue(num, numToString, largeNumDigits){
         truncated = truncateValue(truncated);
     } 
     return truncated;
-
-    //DEAL w big numbers
 }
 
 function findDigitsBeforeDecimal(num){
