@@ -1,5 +1,5 @@
 // WORK WITH -0
-
+// divide by 0
 let currentNum = 0;
 let newNum = '0';
 let newOperator = '';
@@ -81,7 +81,6 @@ function addDecimal(e){
         output.textContent = newNum;
         e.target.disabled = true;
     }
-    
 }
 
 function switchSymbol(){
@@ -175,12 +174,15 @@ function resetClickAnimation() {
     if (clicked) clicked.classList.remove('clicked')
 }
 
-function truncateValue(){
-    // START WORKING HERE
+function truncateValue(num){
+    let numToString = num + '';
+    if (numToString.indexOf('.') > -1) num = roundValue(num);
+    // Add code to reduce size of big numbers
+    return num;
 }
 
-function reduceValue(){
-
+function reduceValue(num, numToString){
+ // Start here
 }
 
 function roundValue(num){
@@ -235,16 +237,16 @@ function maxLengthReached(isDecimal){
 function operation(a, b, op) {
     switch(op){
         case '+': 
-            return roundValue(a + b);
+            return truncateValue(a + b);
         break;
         case '-':
-            return roundValue(a - b);
+            return truncateValue(a - b);
         break;
         case '*':
-            return roundValue(a * b);
+            return truncateValue(a * b);
         break;
         case '/':
-            return roundValue(a / b);
+            return truncateValue(a / b);
         break;
         default: 
     }
