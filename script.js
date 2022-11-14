@@ -188,18 +188,19 @@ function reduceValue(num, numToString){
 function roundValue(num){
     const numToString = num + '';
     if (numToString.indexOf('.') === -1) return num;
-    const roundPrecision = 11 - findDigitsBeforeDecimal(num);
-    const modNumber = (10 ** (-roundPrecision));
-    let digits = 12;
-    if (numToString.indexOf('-') > -1) digits++;
-    let truncated = parseFloat((num + '').substr(0, digits));
+    let roundPrecision = 11 - findDigitsBeforeDecimal(num);
+    let roundReference = (10 ** (-roundPrecision)) * 0.5;
+    let numberOfDigits = 12;
+
+    if (numToString.indexOf('-') > -1) numberOfDigits++;
+    
+    let truncated = parseFloat((num + '').substr(0, numberOfDigits));
     let rest = Math.abs(num) - Math.abs(truncated);
-    const roundReference = modNumber * 0.5;
     if (rest >= roundReference) {
         if(numToString.indexOf('-') === -1) {
-            truncated += modNumber;
+            truncated += 2 * roundReference;
         } else{
-            truncated -= modNumber;
+            truncated -= 2 * roundReference;
         }
 
     } 
