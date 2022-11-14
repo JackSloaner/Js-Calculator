@@ -185,8 +185,9 @@ function truncateValue(num){
         } else { 
             let decimalPart = numToString.substr(0, ePosition);
             let restOfNum = numToString.substr(ePosition);
+            restOfNum = restOfNum.substr(0, 1) + restOfNum.substr(2)
             decimalPart = roundValue(decimalPart, numToString, restOfNum.length);
-            num = parseFloat(decimalPart + restOfNum);
+            num = decimalPart + restOfNum;
             return num;
         }
     }
