@@ -186,7 +186,8 @@ function truncateValue(num){
         } else { 
             let decimalPart = numToString.substr(0, ePosition);
             let restOfNum = numToString.substr(ePosition);
-            restOfNum = restOfNum.substr(0, 1) + restOfNum.substr(2)
+            if (numToString.indexOf('+') > -1) restOfNum = restOfNum.substr(0, 1) + restOfNum.substr(2)
+
             decimalPart = roundValue(decimalPart, numToString, restOfNum.length);
             if (Math.abs(decimalPart) === 10) {
                 decimalPart /= 10;
@@ -222,7 +223,7 @@ function reduceValue(num, numToString){
 
 function roundValue(num, numToString, largeNumDigits){
     const dotPosition = numToString.indexOf('.');
-    const containsNegative = numToString.indexOf('-') > -1;
+    const containsNegative = numToString.indexOf('-') === 0;
     if (dotPosition === -1) return num; // ****
 
     const digitCount = findDigitsBeforeDecimal(num);
@@ -250,7 +251,7 @@ function roundValue(num, numToString, largeNumDigits){
         } else{
             truncated -= 2 * roundReference;
         }
-
+        truncated = truncateValue(truncated);
     } 
     return truncated;
 
