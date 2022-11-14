@@ -178,45 +178,58 @@ function resetClickAnimation() {
 
 function truncateValue(num){
     let numToString = num + '';
-    if (numToString.indexOf('.') > -1) num = roundValue(num);
+    if (numToString.indexOf('.') > -1) num = roundValue(num, numToString);
     let maxLength = 11;
     if (numToString.indexOf('-') === -1) maxLength++;
     if (findDigitsBeforeDecimal(num) > maxLength) num = reduceValue(num, numToString);
     return num;
-
-
 }
 
 function reduceValue(num, numToString){
     let numDigits = findDigitsBeforeDecimal(num);
-    let magNumD = findDigitsBeforeDecimal(numDigits) - 2;
-    let extraChars = 0;
-    if (numToString.indexOf('-') > -1) extraChars++;
-    let truncated = numToString.substr(0, 8 - magNumD + extraChars);
-    let decimalPosition = 0; 
+    let extraCharacter = 0;
+    let decimalPosition = 1; 
     if (numToString.indexOf('-') > -1) {
+        extraCharacter++;
         decimalPosition++;
-    }
-    truncated = truncated.substr(0, decimalPosition + 1) + '.' + truncated.substr(decimalPosition + 1);
+    };
+    
+    let truncated = numToString.substr(0, 8 + extraCharacter);
+
+    truncated = truncated.substr(0, decimalPosition) + '.' + truncated.substr(decimalPosition);
     num = truncated + 'E' + numDigits;
     return num;
 
     // MAKE SURE YOU STORE THE REAL COMPUTED VALUE ASWELL SO WE CAN DO OPERATIONS ON THE ANSWER
 }
 
-function roundValue(num){
-    const numToString = num + '';
-    if (numToString.indexOf('.') === -1) return num;
-    let roundPrecision = 11 - findDigitsBeforeDecimal(num);
-    let roundReference = (10 ** (-roundPrecision)) * 0.5;
-    let numberOfDigits = 12;
+function roundValue(num, numToString){
+    const dotPosition = numToString.indexOf('.');
+    const containsNegative = numToString.indexOf('-') > -1;
+    if (dotPosition === -1) return num;
 
-    if (numToString.indexOf('-') > -1) numberOfDigits++;
+    const digitCount = findDigitsBeforeDecimal(num);
+
+    let roundPrecision;
+    let numberOfCharacters;
+    let roundReference;
+
+    if (digitCount <= 10){
+        roundPrecision = 11 - digitCount;
+        roundReference = roundReference = (10 ** (-roundPrecision)) * 0.5;
+        numberOfCharacters = 12;
+        if (containsNegative) numberOfCharacters++;
+    } else{
+        numberOfCharacters = dotPosition;
+        roundReference = 0.5;
+    }
     
-    let truncated = parseFloat((num + '').substr(0, numberOfDigits));
-    let rest = Math.abs(num) - Math.abs(truncated);
+    
+    let truncated = parseFloat(numToString.substr(0, numberOfCharacters));
+    const rest = Math.abs(num) - Math.abs(truncated);
+
     if (rest >= roundReference) {
-        if(numToString.indexOf('-') === -1) {
+        if(!containsNegative) {
             truncated += 2 * roundReference;
         } else{
             truncated -= 2 * roundReference;
