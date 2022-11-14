@@ -99,6 +99,8 @@ function switchSymbol(){
         newNum = newString;
     }
     output.textContent = newNum;
+
+    // make it go to -0 when pressed while newOperator is active
 }
 
 function numberPressed(e){
@@ -177,12 +179,29 @@ function resetClickAnimation() {
 function truncateValue(num){
     let numToString = num + '';
     if (numToString.indexOf('.') > -1) num = roundValue(num);
-    // Add code to reduce size of big numbers
+    let maxLength = 11;
+    if (numToString.indexOf('-') === -1) maxLength++;
+    if (findDigitsBeforeDecimal(num) > maxLength) num = reduceValue(num, numToString);
     return num;
+
+
 }
 
 function reduceValue(num, numToString){
- // Start here
+    let numDigits = findDigitsBeforeDecimal(num);
+    let magNumD = findDigitsBeforeDecimal(numDigits) - 2;
+    let extraChars = 0;
+    if (numToString.indexOf('-') > -1) extraChars++;
+    let truncated = numToString.substr(0, 8 - magNumD + extraChars);
+    let decimalPosition = 0; 
+    if (numToString.indexOf('-') > -1) {
+        decimalPosition++;
+    }
+    truncated = truncated.substr(0, decimalPosition + 1) + '.' + truncated.substr(decimalPosition + 1);
+    num = truncated + 'E' + numDigits;
+    return num;
+
+    // MAKE SURE YOU STORE THE REAL COMPUTED VALUE ASWELL SO WE CAN DO OPERATIONS ON THE ANSWER
 }
 
 function roundValue(num){
@@ -205,6 +224,8 @@ function roundValue(num){
 
     } 
     return truncated;
+
+    //DEAL w big numbers
 }
 
 function findDigitsBeforeDecimal(num){
