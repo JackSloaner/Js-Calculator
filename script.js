@@ -47,13 +47,18 @@ function deleteOutput(){
 }
 
 function equalOperate(){
-    if (equalPair[0]){
-        displayOperation(true)
-    } else if (currentOperator){
-            displayOperation();
-            resetDefaults('newOperator', 'currentOperator', 'currentNum', 'decimal'); 
-        }
-        
+    if (!newOperator){
+        if (equalPair[0]){
+            displayOperation(true)
+        } else if (currentOperator){
+                displayOperation();
+                resetDefaults('newOperator', 'currentOperator', 'currentNum', 'decimal'); 
+            }
+    } else {
+        currentNum = parseFloat(newNum);
+        currentOperator = newOperator;
+        displayOperation();
+    } 
 }
 
 function addDecimal(e){
