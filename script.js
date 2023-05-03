@@ -41,7 +41,7 @@ function deleteOutput(){
     if(typeof(newNum) === 'string'){
         if (newNum[newNum.length - 1] === '.') resetDefaults('decimal');
         newNum = newNum.substr(0, newNum.length - 1);
-        if (newNum === '') newNum = '0';
+        if (newNum === '' || newNum == '-') newNum = '0';
         output.textContent = newNum;
     }
 }
