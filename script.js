@@ -100,7 +100,6 @@ function switchSymbol(){
         } else {
             newString = '-' + newString
         }
-        newNum *= -1;
         output.textContent = newString;
 
         if (newString.indexOf('e') === -1){
@@ -109,7 +108,7 @@ function switchSymbol(){
             } else {
                 newNum = newString;
             }
-            output.textContent = newNum;
+        output.textContent = newNum;
         }
     } else if (output.textContent != 'ERROR'){
         currentOperator = newOperator;
