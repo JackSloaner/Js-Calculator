@@ -104,11 +104,12 @@ function switchSymbol(){
         output.textContent = newString;
 
         if (newString.indexOf('e') === -1){
-            if (typeof(output.textContent) === 'number') {
+            if (typeof(newNum) === 'number') {
                 newNum = parseFloat(newString)
             } else {
-                newNum = newString;}
-                output.textContent = newNum;
+                newNum = newString;
+            }
+            output.textContent = newNum;
         }
     } else if (output.textContent != 'ERROR'){
         currentOperator = newOperator;
