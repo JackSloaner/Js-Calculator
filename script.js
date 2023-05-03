@@ -182,6 +182,7 @@ function displayOperation(equalsOperation) {
     } else{
         const truncatedNum = truncateValue(newNum);
         mini.textContent += truncatedNum;
+        newNum = truncatedNum;
         output.textContent = truncatedNum;
     }
 }
